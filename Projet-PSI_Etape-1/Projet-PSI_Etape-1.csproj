@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <UseWindowsForms>true</UseWindowsForms>
+	  <OutputType>Exe</OutputType>
+	  <TargetFramework>net8.0-windows</TargetFramework>
+	  <RootNamespace>Projet_PSI_Etape_1</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
