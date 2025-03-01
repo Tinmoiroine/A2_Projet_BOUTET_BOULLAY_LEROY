@@ -1,0 +1,92 @@
+CREATE TABLE Compte (
+    Id_Compte INT PRIMARY KEY AUTO_INCREMENT,
+    Nom VARCHAR(255),
+    Prenom VARCHAR(255),
+    Mail VARCHAR(255) UNIQUE,
+    Mot_de_Passe VARCHAR(255),
+    Ville VARCHAR(255),
+    Code_Postal VARCHAR(10),
+    Telephone VARCHAR(20),
+    Statut VARCHAR(50)
+);
+
+CREATE TABLE Client (
+    Id_Client INT PRIMARY KEY AUTO_INCREMENT,
+    Nom_Entreprise VARCHAR(255),
+    Mot_Passe VARCHAR(255),
+    Id_Compte INT,
+    FOREIGN KEY (Id_Compte) REFERENCES Compte(Id_Compte)
+);
+
+CREATE TABLE Commande (
+    Id_Commande INT PRIMARY KEY AUTO_INCREMENT,
+    Date_Commande DATE,
+    Statut_Commande VARCHAR(50),
+    Prix_Total DECIMAL(10,2),
+    Statut_Transaction VARCHAR(50),
+    Facture TEXT,
+    Mode_Paiement VARCHAR(50),
+    Id_Client INT,
+    FOREIGN KEY (Id_Client) REFERENCES Client(Id_Client)
+);
+
+CREATE TABLE Avis (
+    Id_Avis INT PRIMARY KEY AUTO_INCREMENT,
+    Note INT CHECK (Note BETWEEN 1 AND 5),
+    Date_Avis DATE,
+    Commentaire TEXT,
+    Id_Client INT,
+    FOREIGN KEY (Id_Client) REFERENCES Client(Id_Client)
+);
+
+CREATE TABLE Cuisinier (
+    Id_Cuisinier INT PRIMARY KEY AUTO_INCREMENT,
+    Zone_Livraison VARCHAR(255),
+    Id_Compte INT,
+    FOREIGN KEY (Id_Compte) REFERENCES Compte(Id_Compte)
+);
+
+CREATE TABLE Plat (
+    Id_Plat INT PRIMARY KEY AUTO_INCREMENT,
+    Type_Plat VARCHAR(255),
+    Date_Fabrication DATE,
+    Photos TEXT,
+    Date_Péremption DATE,
+    Type_Régime VARCHAR(255),
+    Prix DECIMAL(10,2),
+    Ingrédients_Principaux TEXT,
+    Nombre_Portion INT,
+    Id_Cuisinier INT,
+    FOREIGN KEY (Id_Cuisinier) REFERENCES Cuisinier(Id_Cuisinier)
+);
+
+CREATE TABLE Recette (
+    Id_Recette INT PRIMARY KEY AUTO_INCREMENT,
+    Nom_Recette VARCHAR(255),
+    Instructions TEXT,
+    Temps_Préparation INT,
+    Temps_Cuisson INT,
+    Difficulté VARCHAR(50)
+);
+
+CREATE TABLE Plat_Recette (
+    Id_Plat INT,
+    Id_Recette INT,
+    PRIMARY KEY (Id_Plat, Id_Recette),
+    FOREIGN KEY (Id_Plat) REFERENCES Plat(Id_Plat),
+    FOREIGN KEY (Id_Recette) REFERENCES Recette(Id_Recette)
+);
+
+CREATE TABLE Ingrédient (
+    Id_Ingrédient INT PRIMARY KEY AUTO_INCREMENT,
+    Volume VARCHAR(50),
+    Ingrédient VARCHAR(255)
+);
+
+CREATE TABLE Recette_Ingrédient (
+    Id_Recette INT,
+    Id_Ingrédient INT,
+    PRIMARY KEY (Id_Recette, Id_Ingrédient),
+    FOREIGN KEY (Id_Recette) REFERENCES Recette(Id_Recette),
+    FOREIGN KEY (Id_Ingrédient) REFERENCES Ingrédient(Id_Ingrédient)
+);
